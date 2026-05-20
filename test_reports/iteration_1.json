@@ -1,0 +1,40 @@
+{
+  "summary": "SONARA MVP first-pass test. Backend: 39/39 pytest cases pass against external EXPO_PUBLIC_BACKEND_URL covering health, meta, dev-login, auth/me, profile CRUD, feed, events CRUD + join/leave, projects + tasks + join, discover (filters + compatibility), swipe deck excludes self/swiped, mutual swipe creates match + chat + notification, chats list/create + messages, WebSocket /api/ws auth + chat-message broadcast + ping/pong, notifications list+mark-read, ratings (valid 1-5 + 400 on invalid), reports, verifications submit+get, admin (users/reports/verifications/analytics, ban/unban/resolve/approve), non-admin gets 403. Verified NO '_id' in any response. Frontend: splash renders 'SONARA' brand, hero 'Find your next collaboration', google-signin-button testID; token injection via localStorage redirects onboarded user to /home (feed populated with seeded events/musicians/projects), non-onboarded user to /onboarding (1/5 'What's your role?'). Tab navigation Home/Discover/Create/Chat/Profile all work. Profile shows Alex Synth with stats, badges, sign out CTA.",
+  "backend_issues": {
+    "critical": [],
+    "minor": [
+      {"endpoint": "/api/events/{id}/join", "issue": "Always notifies host even if joiner == host (host auto-joined at create). Not a blocker but spams host on self-join attempts. Currently returns 'already_joined' so no-op."}
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "global", "issues": ["Console warnings: 'shadow*' style props deprecated (use boxShadow), Image style.resizeMode deprecated (use props.resizeMode), props.pointerEvents deprecated. Non-blocking RN-web deprecation warnings; safe to fix at leisure."]}
+    ],
+    "react_native_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_sonara_api.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [
+    "(Optional) Address RN-web deprecation warnings (shadow*, resizeMode, pointerEvents) to clean console output.",
+    "(Optional) Skip host self-notification path in /events/{id}/join when uid == host_id."
+  ],
+  "critical_code_review_comments": [
+    "server.py is 1255 lines — could be split into routers (auth/events/projects/chat/admin) for maintainability, but acceptable for MVP.",
+    "clean() correctly strips MongoDB _id everywhere; verified across all responses.",
+    "Dev login endpoint /api/dev/test-login is open (ALLOW_DEV_LOGIN defaults to '1'). Production should set ALLOW_DEV_LOGIN=0 to disable. Highlight to user but not blocking for current MVP testing.",
+    "WebSocket auth via query-string token works; sessions are TTL-indexed in MongoDB (expireAfterSeconds=0)."
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_sonara_api.py (created)"
+  ],
+  "success_rate": {"backend": "100% (39/39)", "frontend": "100% smoke (splash, auth-redirect, onboarding redirect, tabs nav, profile)"},
+  "seed_data_creation": "Backend seeds 6 demo musicians + 5 events + 2 projects on startup (idempotent via $setOnInsert). Tests created TEST_Event_Jam, TEST_Project_Lofi, TEST_Task, TEST_Hello messages, ratings/reports/verifications. Mutual like between alex and luna created a real match + chat (intended for chat tests).",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "All 39 backend API tests in /app/backend/tests/test_sonara_api.py pass. Frontend splash, auth flow (dev token injection), onboarding redirect, and all 5 tab navigations verified on mobile viewport (390x844). For authenticated frontend flows, use POST /api/dev/test-login then localStorage.setItem('sonara_session_token', JSON.stringify(token)) and reload. Use 'alex.demo@sonara.app' for onboarded user, any new email for non-onboarded path. WebSocket URL pattern: wss://jam-hub-2.preview.emergentagent.com/api/ws?token=<tok>.",
+  "rca_of_issue": "N/A — no bugs to RCA. Initial test run produced one false-positive failure in WebSocket pong assertion because a chat notification arrived between the ping and pong frames; fixed by draining frames until 'pong' is seen. WS broadcast itself was working correctly."
+}
