@@ -1,0 +1,223 @@
+{
+  "project_name": "SONARA",
+  "app_type": "Expo React Native",
+  "theme": "dark",
+  "archetype": "Custom Dark-Neon Creator",
+  "emotion_target": "Energetic, focused, creative, connected",
+  "colors": {
+    "background": {
+      "primary": "#0F0F0F",
+      "secondary": "#1A1A1A",
+      "tertiary": "#262626"
+    },
+    "text": {
+      "primary": "#FFFFFF",
+      "secondary": "#A1A1AA",
+      "muted": "#71717A"
+    },
+    "accent": {
+      "purple": "#8B5CF6",
+      "green": "#4ADE80",
+      "blue": "#38BDF8"
+    },
+    "gradients": {
+      "hero_overlay": "linear-gradient(180deg, rgba(15,15,15,0.2) 0%, rgba(15,15,15,0.9) 100%)",
+      "accent_vibe": "linear-gradient(135deg, #8B5CF6 0%, #38BDF8 100%)"
+    },
+    "surface": {
+      "glass": "rgba(26, 26, 26, 0.7)",
+      "glass_border": "rgba(255, 255, 255, 0.1)"
+    }
+  },
+  "typography": {
+    "fonts": {
+      "heading": "Satoshi",
+      "body": "Inter",
+      "accent": "SF Pro Display"
+    },
+    "hierarchy": {
+      "h1": {
+        "size": 36,
+        "lineHeight": 44,
+        "weight": "800",
+        "letterSpacing": -1.5,
+        "family": "Satoshi"
+      },
+      "h2": {
+        "size": 28,
+        "lineHeight": 34,
+        "weight": "700",
+        "letterSpacing": -1,
+        "family": "Satoshi"
+      },
+      "h3": {
+        "size": 22,
+        "lineHeight": 28,
+        "weight": "600",
+        "letterSpacing": -0.5,
+        "family": "Satoshi"
+      },
+      "body": {
+        "size": 16,
+        "lineHeight": 24,
+        "weight": "400",
+        "letterSpacing": 0,
+        "family": "Inter"
+      },
+      "label": {
+        "size": 12,
+        "lineHeight": 16,
+        "weight": "600",
+        "letterSpacing": 1,
+        "family": "Inter",
+        "textTransform": "uppercase"
+      }
+    }
+  },
+  "spacing_and_layout": {
+    "base_unit": 4,
+    "scale": {
+      "xs": 4,
+      "sm": 8,
+      "md": 16,
+      "lg": 24,
+      "xl": 32,
+      "2xl": 48,
+      "3xl": 64
+    },
+    "screen_padding": 24,
+    "border_radius": {
+      "sm": 8,
+      "md": 16,
+      "lg": 24,
+      "pill": 9999
+    }
+  },
+  "components": {
+    "button": {
+      "primary": {
+        "backgroundColor": "#8B5CF6",
+        "color": "#FFFFFF",
+        "borderRadius": 9999,
+        "paddingVertical": 16,
+        "paddingHorizontal": 32,
+        "alignItems": "center"
+      },
+      "secondary": {
+        "backgroundColor": "rgba(255, 255, 255, 0.05)",
+        "borderWidth": 1,
+        "borderColor": "rgba(255, 255, 255, 0.1)",
+        "color": "#FFFFFF",
+        "borderRadius": 9999,
+        "paddingVertical": 16,
+        "paddingHorizontal": 32
+      }
+    },
+    "card": {
+      "surface": {
+        "backgroundColor": "#1A1A1A",
+        "borderRadius": 24,
+        "padding": 24,
+        "borderWidth": 1,
+        "borderColor": "rgba(255, 255, 255, 0.05)"
+      },
+      "glass": {
+        "backgroundColor": "rgba(26, 26, 26, 0.6)",
+        "borderRadius": 24,
+        "padding": 24,
+        "borderWidth": 1,
+        "borderColor": "rgba(255, 255, 255, 0.1)",
+        "backdropFilter": "blur(20px)"
+      }
+    },
+    "bottom_navigation": {
+      "type": "floating_pill",
+      "backgroundColor": "rgba(15, 15, 15, 0.85)",
+      "borderWidth": 1,
+      "borderColor": "rgba(255, 255, 255, 0.1)",
+      "backdropFilter": "blur(20px)",
+      "borderRadius": 9999,
+      "marginHorizontal": 24,
+      "marginBottom": 32,
+      "paddingVertical": 16,
+      "activeColor": "#4ADE80",
+      "inactiveColor": "#A1A1AA"
+    },
+    "inputs": {
+      "default": {
+        "backgroundColor": "#0F0F0F",
+        "borderWidth": 1,
+        "borderColor": "#333333",
+        "borderRadius": 12,
+        "padding": 16,
+        "color": "#FFFFFF"
+      },
+      "focus": {
+        "borderColor": "#8B5CF6"
+      }
+    }
+  },
+  "motion_and_interactions": {
+    "page_transition": {
+      "type": "fade_and_slide_up",
+      "duration": "300ms",
+      "easing": "ease-out"
+    },
+    "card_press": {
+      "scale": 0.97,
+      "duration": "150ms"
+    }
+  },
+  "media": {
+    "images": {
+      "splash_background": {
+        "url": "https://static.prod-images.emergentagent.com/jobs/0116f9a6-8637-42d9-b6c1-b4685b0a070f/images/a24d6e9eaf48cd2c1d943e4e2489c1b5a8c6525f433beb02348c32806e2a3b12.png",
+        "description": "Moody dark music studio setup with neon purple and blue backlighting"
+      },
+      "auth_hero": {
+        "url": "https://static.prod-images.emergentagent.com/jobs/0116f9a6-8637-42d9-b6c1-b4685b0a070f/images/a72f39cdb04bdb83b6c394a0333a8e0e1c81a0040c55534bddfc5dc52c7af51e.png",
+        "description": "Abstract 3D glowing soundwave in purple, green and blue neon colors on pure black background"
+      },
+      "event_covers": [
+        {
+          "url": "https://images.unsplash.com/photo-1556021664-336d17c68d85?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzF8MHwxfHNlYXJjaHwzfHxtdXNpY2lhbiUyMGNvbmNlcnQlMjBkYXJrfGVufDB8fHx8MTc3OTI2NDMxN3ww&ixlib=rb-4.1.0&q=85",
+          "description": "Man playing electric guitar performing on stage"
+        },
+        {
+          "url": "https://images.unsplash.com/photo-1617133598406-e51e00732d9f?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzF8MHwxfHNlYXJjaHwxfHxtdXNpY2lhbiUyMGNvbmNlcnQlMjBkYXJrfGVufDB8fHx8MTc3OTI2NDMxN3ww&ixlib=rb-4.1.0&q=85",
+          "description": "Woman in black tank top with blue light on her face"
+        }
+      ],
+      "workspace_covers": [
+        {
+          "url": "https://images.unsplash.com/photo-1524005694952-a9221a423d31?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA3MDB8MHwxfHNlYXJjaHwxfHxyZWNvcmRpbmclMjBzdHVkaW8lMjBkYXJrfGVufDB8fHx8MTc3OTI2NDMxN3ww&ixlib=rb-4.1.0&q=85",
+          "description": "man sitting near piano inside room"
+        },
+        {
+          "url": "https://images.pexels.com/photos/9731331/pexels-photo-9731331.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+          "description": "DJ mixing music on a professional sound mixer"
+        }
+      ]
+    },
+    "icons_strategy": {
+      "library": "@expo/vector-icons/Feather",
+      "strokeWidth": 2,
+      "size_default": 24
+    }
+  },
+  "testing_attributes": {
+    "convention": "data-testid",
+    "format": "kebab-case, role-based (e.g. login-submit-button, discover-filter-tab)"
+  },
+  "instructions_to_main_agent": [
+    "Strictly use the provided React Native color hex codes, specifically keeping #0F0F0F as the absolute background.",
+    "Implement glassmorphism using BlurView from expo-blur wrapped with a 1px border of rgba(255,255,255,0.1).",
+    "Headers must be Satoshi font (or fallback system heavy font) with negative letter spacing for tension. Body text uses Inter.",
+    "Do NOT use pure white for large text blocks, use #A1A1AA or #FFFFFF at 90% opacity to prevent eye strain.",
+    "Make the bottom navigation a floating pill with heavy blur, offset from the bottom edge by 32px.",
+    "All interactive elements must have activeOpacity=0.7 and include data-testid attributes.",
+    "When displaying event covers, ALWAYS use a gradient overlay from bottom to top to ensure text readability.",
+    "Files should be created as .js files, using React Native StyleSheet or NativeWind/Tailwind if configured.",
+    "Maintain the 'Spotify meets Discord' vibe: highly audio-centric, dark, sleek, with popping neon accents for primary CTAs."
+  ]
+}
