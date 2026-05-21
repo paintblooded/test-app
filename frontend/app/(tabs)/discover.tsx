@@ -69,31 +69,35 @@ export default function Discover() {
         />
       </View>
 
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.tabRow}>
-        {(["musicians", "bands", "projects", "events"] as Tab[]).map((t) => (
-          <TouchableOpacity
-            key={t}
-            onPress={() => setTab(t)}
-            testID={`discover-tab-${t}`}
-            style={[styles.tabBtn, tab === t && styles.tabBtnActive]}
-          >
-            <Text
-              numberOfLines={1}
-              allowFontScaling={false}
-              style={[styles.tabText, tab === t && { color: colors.text }]}
+      <View style={styles.tabRowWrap}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.tabRow}>
+          {(["musicians", "bands", "projects", "events"] as Tab[]).map((t) => (
+            <TouchableOpacity
+              key={t}
+              onPress={() => setTab(t)}
+              testID={`discover-tab-${t}`}
+              style={[styles.tabBtn, tab === t && styles.tabBtnActive]}
             >
-              {t.charAt(0).toUpperCase() + t.slice(1)}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
+              <Text
+                numberOfLines={1}
+                allowFontScaling={false}
+                style={[styles.tabText, tab === t && { color: colors.text }]}
+              >
+                {t.charAt(0).toUpperCase() + t.slice(1)}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      </View>
 
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.chipRow}>
-        <Chip label="All" selected={!genre} onPress={() => setGenre(null)} />
-        {genres.map((g) => (
-          <Chip key={g} label={g} selected={genre === g} onPress={() => setGenre(g === genre ? null : g)} testID={`discover-genre-${g}`} />
-        ))}
-      </ScrollView>
+      <View style={styles.chipRowWrap}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.chipRow}>
+          <Chip label="All" selected={!genre} onPress={() => setGenre(null)} />
+          {genres.map((g) => (
+            <Chip key={g} label={g} selected={genre === g} onPress={() => setGenre(g === genre ? null : g)} testID={`discover-genre-${g}`} />
+          ))}
+        </ScrollView>
+      </View>
 
       {loading ? (
         <View style={{ padding: spacing.xl, alignItems: "center" }}><ActivityIndicator color={colors.purple} /></View>
@@ -178,9 +182,11 @@ const styles = StyleSheet.create({
   swipeBtn: { flexDirection: "row", alignItems: "center", paddingHorizontal: 12, paddingVertical: 8, borderRadius: radius.pill, backgroundColor: "rgba(74,222,128,0.12)", borderWidth: 1, borderColor: "rgba(74,222,128,0.3)" },
   searchRow: { flexDirection: "row", alignItems: "center", marginHorizontal: spacing.lg, marginTop: spacing.md, paddingHorizontal: 14, height: 44, backgroundColor: colors.bg2, borderRadius: radius.pill, borderWidth: 1, borderColor: colors.border, gap: 8 },
   search: { flex: 1, color: colors.text, fontSize: 14 },
-  tabRow: { paddingHorizontal: spacing.lg, gap: 8, marginTop: spacing.md, alignItems: "center" },
-  chipRow: { paddingHorizontal: spacing.lg, paddingVertical: 10, gap: 6, alignItems: "center" },
-  tabBtn: { paddingHorizontal: 18, paddingVertical: 10, borderRadius: radius.pill, backgroundColor: colors.bg2, borderWidth: 1, borderColor: colors.border, minHeight: 38, justifyContent: "center" },
+  tabRowWrap: { height: 56, marginTop: spacing.sm },
+  tabRow: { paddingHorizontal: spacing.lg, gap: 8, alignItems: "center", height: 56 },
+  chipRowWrap: { height: 50 },
+  chipRow: { paddingHorizontal: spacing.lg, gap: 6, alignItems: "center", height: 50 },
+  tabBtn: { paddingHorizontal: 18, height: 38, borderRadius: 19, backgroundColor: colors.bg2, borderWidth: 1, borderColor: colors.border, justifyContent: "center", alignItems: "center" },
   tabBtnActive: { backgroundColor: "rgba(139,92,246,0.22)", borderColor: colors.purple },
   tabText: { color: colors.textDim, fontSize: 13, fontWeight: "700" },
   musCard: { flexDirection: "row", alignItems: "center", padding: 14, backgroundColor: colors.bg2, borderRadius: radius.lg, borderWidth: 1, borderColor: colors.border },

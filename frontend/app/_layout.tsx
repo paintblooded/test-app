@@ -5,6 +5,8 @@ import { StatusBar } from "expo-status-bar";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { View, ActivityIndicator } from "react-native";
+import * as Font from "expo-font";
+import { Feather } from "@expo/vector-icons";
 import { AuthProvider, useAuth } from "@/src/context/AuthContext";
 import { colors } from "@/src/theme";
 
@@ -51,6 +53,18 @@ function Router() {
 }
 
 export default function RootLayout() {
+  const [fontsLoaded] = Font.useFonts({
+    ...Feather.font,
+  });
+
+  if (!fontsLoaded) {
+    return (
+      <View style={{ flex: 1, backgroundColor: colors.bg, alignItems: "center", justifyContent: "center" }}>
+        <ActivityIndicator color={colors.purple} size="large" />
+      </View>
+    );
+  }
+
   return (
     <GestureHandlerRootView style={{ flex: 1, backgroundColor: colors.bg }}>
       <SafeAreaProvider>

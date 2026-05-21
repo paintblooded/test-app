@@ -8,21 +8,14 @@ import { colors } from "@/src/theme";
 type TabIconProps = { focused: boolean; iconName: keyof typeof Feather.glyphMap; label: string };
 
 function TabIcon({ focused, iconName, label }: TabIconProps) {
+  const tint = focused ? colors.green : colors.textDim;
   return (
     <View style={styles.tabItem}>
-      <Feather name={iconName} size={20} color={focused ? colors.green : colors.textDim} />
+      <Feather name={iconName} size={20} color={tint} />
       <Text
         numberOfLines={1}
-        adjustsFontSizeToFit
-        minimumFontScale={0.7}
         allowFontScaling={false}
-        style={{
-          color: focused ? colors.green : colors.textDim,
-          fontSize: 10,
-          fontWeight: "700",
-          marginTop: 3,
-          textAlign: "center",
-        }}
+        style={[styles.tabLabel, { color: tint }]}
       >
         {label}
       </Text>
@@ -47,26 +40,11 @@ export default function TabsLayout() {
         sceneStyle: { backgroundColor: colors.bg },
       }}
     >
-      <Tabs.Screen
-        name="home"
-        options={{ tabBarIcon: ({ focused }) => <TabIcon focused={focused} iconName="home" label="Home" /> }}
-      />
-      <Tabs.Screen
-        name="discover"
-        options={{ tabBarIcon: ({ focused }) => <TabIcon focused={focused} iconName="compass" label="Discover" /> }}
-      />
-      <Tabs.Screen
-        name="create"
-        options={{ tabBarIcon: ({ focused }) => <TabIcon focused={focused} iconName="plus-circle" label="Create" /> }}
-      />
-      <Tabs.Screen
-        name="chat"
-        options={{ tabBarIcon: ({ focused }) => <TabIcon focused={focused} iconName="message-circle" label="Chat" /> }}
-      />
-      <Tabs.Screen
-        name="profile"
-        options={{ tabBarIcon: ({ focused }) => <TabIcon focused={focused} iconName="user" label="Profile" /> }}
-      />
+      <Tabs.Screen name="home" options={{ tabBarIcon: ({ focused }) => <TabIcon focused={focused} iconName="home" label="Home" /> }} />
+      <Tabs.Screen name="discover" options={{ tabBarIcon: ({ focused }) => <TabIcon focused={focused} iconName="compass" label="Discover" /> }} />
+      <Tabs.Screen name="create" options={{ tabBarIcon: ({ focused }) => <TabIcon focused={focused} iconName="plus-circle" label="Create" /> }} />
+      <Tabs.Screen name="chat" options={{ tabBarIcon: ({ focused }) => <TabIcon focused={focused} iconName="message-circle" label="Chat" /> }} />
+      <Tabs.Screen name="profile" options={{ tabBarIcon: ({ focused }) => <TabIcon focused={focused} iconName="user" label="Profile" /> }} />
     </Tabs>
   );
 }
@@ -74,10 +52,10 @@ export default function TabsLayout() {
 const styles = StyleSheet.create({
   tabBar: {
     position: "absolute",
-    left: 16,
-    right: 16,
+    left: 12,
+    right: 12,
     bottom: 16,
-    height: 70,
+    height: 64,
     borderRadius: 999,
     backgroundColor: "transparent",
     borderTopWidth: 0,
@@ -86,21 +64,27 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     elevation: 0,
     shadowOpacity: 0,
-    paddingHorizontal: 8,
+    paddingHorizontal: 4,
   },
   tabBarItem: {
     flex: 1,
-    height: 70,
+    height: 64,
     paddingTop: 0,
     paddingBottom: 0,
+    paddingHorizontal: 2,
     justifyContent: "center",
     alignItems: "center",
   },
   tabItem: {
-    flex: 1,
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    paddingHorizontal: 2,
+  },
+  tabLabel: {
+    fontSize: 9,
+    fontWeight: "700",
+    marginTop: 3,
+    textAlign: "center",
+    includeFontPadding: false,
   },
 });
