@@ -567,7 +567,7 @@ async def get_event(event_id: str, request: Request):
         raise HTTPException(404, "Event not found")
     host = await get_user_by_id(event["host_id"])
     participant_ids = event.get("participant_ids", []) or []
-    participants_docs = await db.users.find({"user_id": {"$in": participant_ids}}, {"_id": 0}).to_list(500) if participant_ids else []
+    participants_docs = await db.users.find({"user_id": {"$in": participant_ids}}, {"_id": 0, "user_id": 1, "name": 1, "profile_photo": 1, "role": 1, "skill_level": 1, "verified": 1, "reliability_score": 1}).to_list(500) if participant_ids else []
     p_by_id = {p["user_id"]: clean(p) for p in participants_docs}
     participants = [p_by_id[pid] for pid in participant_ids if pid in p_by_id]
     return {
@@ -666,7 +666,7 @@ async def get_project(project_id: str, request: Request):
     if not project:
         raise HTTPException(404, "Project not found")
     member_ids = project.get("member_ids", []) or []
-    member_docs = await db.users.find({"user_id": {"$in": member_ids}}, {"_id": 0}).to_list(500) if member_ids else []
+    member_docs = await db.users.find({"user_id": {"$in": member_ids}}, {"_id": 0, "user_id": 1, "name": 1, "profile_photo": 1, "role": 1, "skill_level": 1, "verified": 1}).to_list(500) if member_ids else []
     m_by_id = {m["user_id"]: clean(m) for m in member_docs}
     members = [m_by_id[mid] for mid in member_ids if mid in m_by_id]
     return {"project": clean(project), "members": members}
@@ -826,7 +826,7 @@ async def my_matches(request: Request):
     matches = await db.matches.find({"user_ids": user["user_id"]}, {"_id": 0}).sort("created_at", -1).to_list(100)
     other_ids = [next((u for u in m.get("user_ids", []) if u != user["user_id"]), None) for m in matches]
     other_id_set = [oid for oid in other_ids if oid]
-    other_docs = await db.users.find({"user_id": {"$in": other_id_set}}, {"_id": 0}).to_list(500) if other_id_set else []
+    other_docs = await db.users.find({"user_id": {"$in": other_id_set}}, {"_id": 0, "user_id": 1, "name": 1, "profile_photo": 1, "role": 1, "genres": 1, "city": 1, "verified": 1, "reliability_score": 1}).to_list(500) if other_id_set else []
     u_by_id = {u["user_id"]: u for u in other_docs}
     out = []
     for m, oid in zip(matches, other_ids):
@@ -873,7 +873,7 @@ async def list_chats(request: Request):
         for pid in c.get("participant_ids", []) or []:
             if pid != user["user_id"]:
                 other_ids.add(pid)
-    user_docs = await db.users.find({"user_id": {"$in": list(other_ids)}}, {"_id": 0}).to_list(1000) if other_ids else []
+    user_docs = await db.users.find({"user_id": {"$in": list(other_ids)}}, {"_id": 0, "user_id": 1, "name": 1, "profile_photo": 1}).to_list(1000) if other_ids else []
     u_by_id = {u["user_id"]: u for u in user_docs}
     out = []
     for c in chats:
