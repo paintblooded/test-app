@@ -70,24 +70,8 @@ export default function Index() {
               By continuing, you agree to SONARA&apos;s Terms & Privacy.
             </Text>
           </View>
-
-          <View style={styles.featureRow}>
-            <Feature icon="calendar" label="Events" />
-            <Feature icon="users" label="Match" />
-            <Feature icon="music" label="Projects" />
-            <Feature icon="message-circle" label="Chat" />
-          </View>
         </ScrollView>
       </SafeAreaView>
-    </View>
-  );
-}
-
-function Feature({ icon, label }: { icon: any; label: string }) {
-  return (
-    <View style={styles.feat}>
-      <Feather name={icon} size={18} color={colors.green} />
-      <Text style={styles.featLabel}>{label}</Text>
     </View>
   );
 }
@@ -107,10 +91,4 @@ const styles = StyleSheet.create({
   hero: { ...text.h1, fontSize: 40, lineHeight: 46 },
   sub: { ...text.bodyDim, fontSize: 16, lineHeight: 24 },
   legal: { color: colors.textMuted, fontSize: 12, textAlign: "center", marginTop: 8 },
-  featureRow: {
-    flexDirection: "row", justifyContent: "space-between", marginTop: spacing.xl,
-    paddingTop: spacing.md, borderTopWidth: 1, borderTopColor: colors.border,
-  },
-  feat: { alignItems: "center", gap: 6 },
-  featLabel: { color: colors.textDim, fontSize: 12, fontWeight: "600" },
 });
