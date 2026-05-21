@@ -10,8 +10,22 @@ type TabIconProps = { focused: boolean; iconName: keyof typeof Feather.glyphMap;
 function TabIcon({ focused, iconName, label }: TabIconProps) {
   return (
     <View style={styles.tabItem}>
-      <Feather name={iconName} size={22} color={focused ? colors.green : colors.textDim} />
-      <Text style={{ color: focused ? colors.green : colors.textDim, fontSize: 10, fontWeight: "700", marginTop: 3 }}>{label}</Text>
+      <Feather name={iconName} size={20} color={focused ? colors.green : colors.textDim} />
+      <Text
+        numberOfLines={1}
+        adjustsFontSizeToFit
+        minimumFontScale={0.7}
+        allowFontScaling={false}
+        style={{
+          color: focused ? colors.green : colors.textDim,
+          fontSize: 10,
+          fontWeight: "700",
+          marginTop: 3,
+          textAlign: "center",
+        }}
+      >
+        {label}
+      </Text>
     </View>
   );
 }
@@ -23,11 +37,12 @@ export default function TabsLayout() {
         headerShown: false,
         tabBarShowLabel: false,
         tabBarStyle: styles.tabBar,
+        tabBarItemStyle: styles.tabBarItem,
         tabBarBackground: () =>
           Platform.OS !== "web" ? (
-            <BlurView intensity={40} tint="dark" style={StyleSheet.absoluteFill} />
+            <BlurView intensity={40} tint="dark" style={[StyleSheet.absoluteFill, { backgroundColor: "rgba(15,15,15,0.78)" }]} />
           ) : (
-            <View style={[StyleSheet.absoluteFill, { backgroundColor: "rgba(15,15,15,0.92)" }]} />
+            <View style={[StyleSheet.absoluteFill, { backgroundColor: "rgba(15,15,15,0.78)" }]} />
           ),
         sceneStyle: { backgroundColor: colors.bg },
       }}
@@ -71,6 +86,21 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     elevation: 0,
     shadowOpacity: 0,
+    paddingHorizontal: 8,
   },
-  tabItem: { alignItems: "center", justifyContent: "center", paddingTop: 8 },
+  tabBarItem: {
+    flex: 1,
+    height: 70,
+    paddingTop: 0,
+    paddingBottom: 0,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  tabItem: {
+    flex: 1,
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 2,
+  },
 });

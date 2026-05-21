@@ -120,7 +120,11 @@ export function Chip({
         selected && { backgroundColor: accent + "22", borderColor: accent },
       ]}
     >
-      <Text style={[s.chipText, selected && { color: accent, fontWeight: "700" }]} numberOfLines={1}>
+      <Text
+        numberOfLines={1}
+        allowFontScaling={false}
+        style={[s.chipText, selected && { color: accent, fontWeight: "700" }]}
+      >
         {label}
       </Text>
     </TouchableOpacity>
@@ -197,14 +201,16 @@ const s = StyleSheet.create({
   },
   btnLabel: { color: "#fff", fontWeight: "700", fontSize: 15 },
   chip: {
-    paddingHorizontal: 14,
-    paddingVertical: 8,
+    paddingHorizontal: 16,
+    paddingVertical: 9,
     borderRadius: radius.pill,
     backgroundColor: colors.bg3,
     borderWidth: 1,
     borderColor: colors.border,
     marginRight: spacing.xs,
     marginBottom: spacing.xs,
+    minHeight: 36,
+    justifyContent: "center",
   },
-  chipText: { color: colors.textDim, fontSize: 13, fontWeight: "500" },
+  chipText: { color: colors.text, fontSize: 13, fontWeight: "600" },
 });
