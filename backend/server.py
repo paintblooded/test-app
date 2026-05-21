@@ -566,11 +566,10 @@ async def get_event(event_id: str, request: Request):
     if not event:
         raise HTTPException(404, "Event not found")
     host = await get_user_by_id(event["host_id"])
-    participants = []
-    for pid in event.get("participant_ids", []):
-        p = await get_user_by_id(pid)
-        if p:
-            participants.append(clean(p))
+    participant_ids = event.get("participant_ids", []) or []
+    participants_docs = await db.users.find({"user_id": {"$in": participant_ids}}, {"_id": 0}).to_list(500) if participant_ids else []
+    p_by_id = {p["user_id"]: clean(p) for p in participants_docs}
+    participants = [p_by_id[pid] for pid in participant_ids if pid in p_by_id]
     return {
         "event": clean(event),
         "host": clean(host) if host else None,
@@ -666,11 +665,10 @@ async def get_project(project_id: str, request: Request):
     project = await db.projects.find_one({"project_id": project_id}, {"_id": 0})
     if not project:
         raise HTTPException(404, "Project not found")
-    members = []
-    for mid in project.get("member_ids", []):
-        m = await get_user_by_id(mid)
-        if m:
-            members.append(clean(m))
+    member_ids = project.get("member_ids", []) or []
+    member_docs = await db.users.find({"user_id": {"$in": member_ids}}, {"_id": 0}).to_list(500) if member_ids else []
+    m_by_id = {m["user_id"]: clean(m) for m in member_docs}
+    members = [m_by_id[mid] for mid in member_ids if mid in m_by_id]
     return {"project": clean(project), "members": members}
 
 @api.post("/projects/{project_id}/join")
@@ -826,10 +824,13 @@ async def swipe(payload: SwipeRequest, request: Request):
 async def my_matches(request: Request):
     user = await require_user(request)
     matches = await db.matches.find({"user_ids": user["user_id"]}, {"_id": 0}).sort("created_at", -1).to_list(100)
+    other_ids = [next((u for u in m.get("user_ids", []) if u != user["user_id"]), None) for m in matches]
+    other_id_set = [oid for oid in other_ids if oid]
+    other_docs = await db.users.find({"user_id": {"$in": other_id_set}}, {"_id": 0}).to_list(500) if other_id_set else []
+    u_by_id = {u["user_id"]: u for u in other_docs}
     out = []
-    for m in matches:
-        other_id = next((u for u in m["user_ids"] if u != user["user_id"]), None)
-        other = await get_user_by_id(other_id) if other_id else None
+    for m, oid in zip(matches, other_ids):
+        other = u_by_id.get(oid) if oid else None
         out.append({"match": clean(m), "other": clean(other) if other else None})
     return {"matches": out}
 
@@ -867,14 +868,20 @@ async def create_chat(payload: ChatCreateRequest, request: Request):
 async def list_chats(request: Request):
     user = await require_user(request)
     chats = await db.chats.find({"participant_ids": user["user_id"]}, {"_id": 0}).sort("created_at", -1).to_list(100)
+    other_ids: set = set()
+    for c in chats:
+        for pid in c.get("participant_ids", []) or []:
+            if pid != user["user_id"]:
+                other_ids.add(pid)
+    user_docs = await db.users.find({"user_id": {"$in": list(other_ids)}}, {"_id": 0}).to_list(1000) if other_ids else []
+    u_by_id = {u["user_id"]: u for u in user_docs}
     out = []
     for c in chats:
         others = []
-        for pid in c["participant_ids"]:
-            if pid != user["user_id"]:
-                p = await get_user_by_id(pid)
-                if p:
-                    others.append({"user_id": p["user_id"], "name": p.get("name"), "profile_photo": p.get("profile_photo")})
+        for pid in c.get("participant_ids", []) or []:
+            if pid != user["user_id"] and pid in u_by_id:
+                p = u_by_id[pid]
+                others.append({"user_id": p["user_id"], "name": p.get("name"), "profile_photo": p.get("profile_photo")})
         out.append({**clean(c), "others": others})
     return {"chats": out}
 
