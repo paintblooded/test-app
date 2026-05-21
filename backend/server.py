@@ -90,6 +90,12 @@ async def require_admin(request: Request) -> dict:
         raise HTTPException(status_code=403, detail="Admin only")
     return user
 
+async def require_super_admin(request: Request) -> dict:
+    user = await require_user(request)
+    if not (user.get("is_super_admin") or user.get("email") in (os.environ.get("SUPER_ADMIN_EMAILS", "").split(","))):
+        raise HTTPException(status_code=403, detail="Super admin only")
+    return user
+
 # ---------------------------------------------------------------------------
 # Models
 # ---------------------------------------------------------------------------
